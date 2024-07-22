@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Checkout project
-      uses: actions/checkout@v3
+      uses: actions/checkout@master
       with:
         submodules: recursive
 
@@ -20,6 +20,15 @@ jobs:
       run: make
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         path: ovlmenu.ovl
+        
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.release_token }}
+        file: ./*.ovl
+        tag: ${{ github.ref }}
+        overwrite: true
+        file_glob: true
