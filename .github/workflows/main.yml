@@ -20,8 +20,10 @@ jobs:
     - name: Build project
       run: |
         git config --global --add safe.directory `pwd`
-        git submodule update --remote 
-        make
+        rm -rf libs/libtesla
+        git clone https://github.com/zerofo/libtesla libs/libtesla
+        #git submodule update --remote 
+        make -j4
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
